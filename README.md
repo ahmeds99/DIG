@@ -15,6 +15,8 @@ eksponerer en liste over stativ med antall ledige sykler og ledige låser.
 ```bash
 git clone https://github.com/ahmeds99/DIG
 
+cd DIG
+
 python3.12 -m venv .venv
 source .venv/bin/activate
 
