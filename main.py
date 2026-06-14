@@ -18,11 +18,9 @@ app = FastAPI(
 )
 
 
-@app.get("/stations", response_model=list[Station])
+@app.get("/stations")
 async def get_stations() -> list[Station]:
-    """
-    Returnerer alle stasjoner med antall ledige sykler og låser akkurat nå.
-    """
+    """Returnerer alle stasjoner med antall ledige sykler og låser akkurat nå."""
 
     try:
         return await fetch_stations()
