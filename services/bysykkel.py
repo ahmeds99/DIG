@@ -31,7 +31,7 @@ async def _fetch_information(
             station_id=s["station_id"],
             name=s["name"],
             capacity=s["capacity"],
-            address=s["address"],
+            address=s.get("address"),
         )
         for s in response.json()["data"]["stations"]
     ]
