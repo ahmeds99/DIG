@@ -18,7 +18,7 @@ async def fetch_stations() -> list[Station]:
             _fetch_information(client),
             _fetch_status(client),
         )
-    return _merge(information, status)
+    return _build_stations(information, status)
 
 
 async def _fetch_information(
@@ -31,6 +31,7 @@ async def _fetch_information(
             station_id=s["station_id"],
             name=s["name"],
             capacity=s["capacity"],
+            address=s["address"],
         )
         for s in response.json()["data"]["stations"]
     ]
@@ -49,7 +50,7 @@ async def _fetch_status(client: httpx.AsyncClient) -> list[StationStatus]:
     ]
 
 
-def _merge(
+def _build_stations(
     information: list[StationInformation],
     status: list[StationStatus],
 ) -> list[Station]:
@@ -57,6 +58,7 @@ def _merge(
     stations = (
         Station(
             name=info.name,
+            address=info.address,
             available_bikes=status_by_id[info.station_id].num_bikes_available,
             available_locks=status_by_id[info.station_id].num_docks_available,
         )
