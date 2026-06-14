@@ -6,7 +6,7 @@ class StationInformation:
     station_id: str
     name: str
     capacity: int
-    address: str
+    address: str | None
 
 
 @dataclass(frozen=True)
@@ -19,6 +19,6 @@ class StationStatus:
 @dataclass(frozen=True)
 class Station:
     name: str
-    address: str
+    address: str | None
     available_bikes: int
     available_locks: int
