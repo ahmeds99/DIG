@@ -38,5 +38,5 @@ Tjeneren kjører på <http://127.0.0.1:8000>.
 
 ## Arkitektur
 
-- Forsøksvis inndeling i Controller-Service-Model-lag med hvert sitt ansvarsområde. Fokus på immuterbar data og dataklasser.
+- Inndeling i Controller-Service-Model-lag med hvert sitt ansvarsområde. Fokus på immuterbar data og dataklasser.
 - Selv om metadata om stasjonene intuitivt oppdateres sjeldnere enn sanntidsdata, blir det ikke benyttet en database for å lagre denne dataen. Dette grunnet skopet av kodeoppgaven og tidsbruken.
