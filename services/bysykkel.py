@@ -1,6 +1,5 @@
 import asyncio
 import os
-from typing import Any
 
 import httpx
 
@@ -25,35 +24,29 @@ async def fetch_stations() -> list[Station]:
 async def _fetch_information(
     client: httpx.AsyncClient,
 ) -> list[StationInformation]:
-    raw = await _get_stations(client, STATION_INFORMATION_URL)
-    return [_parse_information(item) for item in raw]
+    response = await client.get(STATION_INFORMATION_URL)
+    response.raise_for_status()
+    return [
+        StationInformation(
+            station_id=s["station_id"],
+            name=s["name"],
+            capacity=s["capacity"],
+        )
+        for s in response.json()["data"]["stations"]
+    ]
 
 
 async def _fetch_status(client: httpx.AsyncClient) -> list[StationStatus]:
-    raw = await _get_stations(client, STATION_STATUS_URL)
-    return [_parse_status(item) for item in raw]
-
-
-async def _get_stations(client: httpx.AsyncClient, url: str) -> list[dict[str, Any]]:
-    response = await client.get(url)
+    response = await client.get(STATION_STATUS_URL)
     response.raise_for_status()
-    return response.json()["data"]["stations"]
-
-
-def _parse_information(raw: dict[str, Any]) -> StationInformation:
-    return StationInformation(
-        station_id=raw["station_id"],
-        name=raw["name"],
-        capacity=raw["capacity"],
-    )
-
-
-def _parse_status(raw: dict[str, Any]) -> StationStatus:
-    return StationStatus(
-        station_id=raw["station_id"],
-        num_bikes_available=raw["num_bikes_available"],
-        num_docks_available=raw["num_docks_available"],
-    )
+    return [
+        StationStatus(
+            station_id=s["station_id"],
+            num_bikes_available=s["num_bikes_available"],
+            num_docks_available=s["num_docks_available"],
+        )
+        for s in response.json()["data"]["stations"]
+    ]
 
 
 def _merge(
