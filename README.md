@@ -1,4 +1,4 @@
-# Kodeoppgave for Digitaliseringsetaten — Oslo Bysykkel
+# Oslo Bysykkel API
 
 Liten FastAPI-applikasjon som henter sanntidsdata fra
 [Oslo Bysykkels åpne GBFS-API](https://oslobysykkel.no/apne-data/sanntid) og
